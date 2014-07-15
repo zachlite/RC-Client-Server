@@ -20,8 +20,8 @@ bool net_is_client_there(int fd);
 void* client_handler(void *arg);
 
 typedef struct{
+    char client_addr[INET6_ADDRLEN];
     int new_client_fd;
-    char *client_addr;
 }new_client;
 
 
@@ -146,7 +146,7 @@ int net_listen_for_client(int sockfd)
 
         new_client *newc = malloc(sizeof(*newc));
         newc->new_client_fd = newfd;
-        newc->client_addr = s;
+        strncpy(newc->client_addr, s, INET6_ADDRLEN);
 
 
         if (pthread_create(&thread_id, NULL, &net_client_handler, newc) != 0)
