@@ -1,16 +1,16 @@
 
 CC=gcc
-CFLAGS=-std=c99 -g -Wall
+CFLAGS=-std=gnu99 -g -Wall
 
 
-all: server clean client
+all: server client
 
 
 server: network.o server.o
-	$(CC) $(CFLAGS) network.o server.o -o $@
+	$(CC) $(CFLAGS) network.o server.o -o $@ -lpthread
 
 
-server.o: server.c
+server.o: server.c index.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 
@@ -33,4 +33,6 @@ clean:
 	rm -f network.o
 	rm -f server.o		
 	rm -f client.o
+	rm -f client
+	rm -f server
 

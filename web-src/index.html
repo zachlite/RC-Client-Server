@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Controller</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<button class="myButton" id="arrow_up" onclick="ChangeBackround()"> ^ </button>	
+	<button class="myButton" id="arrow_down"> v </button>
+	<button class="myButton" id="arrow_left"> < </button>
+	<button class="myButton" id="arrow_right"> > </button>
+
+	<p id="demo"></p>
+
+	<script type="text/javascript">
+
+	function ChangeBackround() {
+	
+		console.log("button pressed");
+		    document.getElementById("demo").innerHTML = "Hello World";
+
+
+	}
+
+	</script>
+
+</body>
+</html>

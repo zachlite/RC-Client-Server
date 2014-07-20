@@ -23,31 +23,16 @@
 
 typedef enum {SERVER, CLIENT} HostType_t;
 
-char get_index[] = "GET index.html";
-char index_data[] = "<h1>RC Car WebServer!</h1>";
-//"<!DOCTYPE html>
-// <html>
-// 	<head>
-// 		<title>RC Car</title>
-// 	</head>
-// 	<body>
-// 		<div style=\"text-align: center\">
-// 			<h1>RC Car</h1>
-// 			<h3>From Zach's webserver.</h3>
-// 			<br><br>
-				
-// 		</div>
-// 	</body>
-// </html>";
-
-
+typedef struct{
+    char client_addr[INET6_ADDRSTRLEN];
+    int new_client_fd;
+}new_client;
 
 
 int net_open(const char *host, const char *port, HostType_t hostType);
-int net_listen_for_client(int sockfd);
-// int net_spawn_client_handler(int clientfd);
+bool net_is_connected(int fd);
 
-
+void net_print_received_data(char *data);
 
 
 void *get_in_addr(struct sockaddr *sa);

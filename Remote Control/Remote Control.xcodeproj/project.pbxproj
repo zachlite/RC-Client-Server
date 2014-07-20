@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		924CB66A197B756F00103769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB669197B756F00103769 /* Foundation.framework */; };
+		924CB66C197B756F00103769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66B197B756F00103769 /* CoreGraphics.framework */; };
+		924CB66E197B756F00103769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66D197B756F00103769 /* UIKit.framework */; };
+		924CB674197B756F00103769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 924CB672197B756F00103769 /* InfoPlist.strings */; };
+		924CB676197B756F00103769 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 924CB675197B756F00103769 /* main.m */; };
+		924CB67A197B756F00103769 /* RemoteAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 924CB679197B756F00103769 /* RemoteAppDelegate.m */; };
+		924CB67D197B756F00103769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 924CB67B197B756F00103769 /* Main.storyboard */; };
+		924CB680197B756F00103769 /* RemoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 924CB67F197B756F00103769 /* RemoteViewController.m */; };
+		924CB682197B756F00103769 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 924CB681197B756F00103769 /* Images.xcassets */; };
+		924CB689197B757000103769 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB688197B757000103769 /* XCTest.framework */; };
+		924CB68A197B757000103769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB669197B756F00103769 /* Foundation.framework */; };
+		924CB68B197B757000103769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66D197B756F00103769 /* UIKit.framework */; };
+		924CB693197B757000103769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 924CB691197B757000103769 /* InfoPlist.strings */; };
+		924CB695197B757000103769 /* Remote_ControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 924CB694197B757000103769 /* Remote_ControlTests.m */; };
+		924CB69F197B79C500103769 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB69E197B79C500103769 /* CoreMotion.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		924CB68C197B757000103769 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924CB65E197B756F00103769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 924CB665197B756F00103769;
+			remoteInfo = "Remote Control";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		924CB666197B756F00103769 /* Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		924CB669197B756F00103769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		924CB66B197B756F00103769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		924CB66D197B756F00103769 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		924CB671197B756F00103769 /* Remote Control-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Remote Control-Info.plist"; sourceTree = "<group>"; };
+		924CB673197B756F00103769 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		924CB675197B756F00103769 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		924CB677197B756F00103769 /* Remote Control-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Remote Control-Prefix.pch"; sourceTree = "<group>"; };
+		924CB678197B756F00103769 /* RemoteAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteAppDelegate.h; sourceTree = "<group>"; };
+		924CB679197B756F00103769 /* RemoteAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteAppDelegate.m; sourceTree = "<group>"; };
+		924CB67C197B756F00103769 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		924CB67E197B756F00103769 /* RemoteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteViewController.h; sourceTree = "<group>"; };
+		924CB67F197B756F00103769 /* RemoteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteViewController.m; sourceTree = "<group>"; };
+		924CB681197B756F00103769 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		924CB687197B757000103769 /* Remote ControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Remote ControlTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		924CB688197B757000103769 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		924CB690197B757000103769 /* Remote ControlTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Remote ControlTests-Info.plist"; sourceTree = "<group>"; };
+		924CB692197B757000103769 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		924CB694197B757000103769 /* Remote_ControlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Remote_ControlTests.m; sourceTree = "<group>"; };
+		924CB69E197B79C500103769 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		924CB663197B756F00103769 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB69F197B79C500103769 /* CoreMotion.framework in Frameworks */,
+				924CB66C197B756F00103769 /* CoreGraphics.framework in Frameworks */,
+				924CB66E197B756F00103769 /* UIKit.framework in Frameworks */,
+				924CB66A197B756F00103769 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924CB684197B757000103769 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB689197B757000103769 /* XCTest.framework in Frameworks */,
+				924CB68B197B757000103769 /* UIKit.framework in Frameworks */,
+				924CB68A197B757000103769 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		924CB65D197B756F00103769 = {
+			isa = PBXGroup;
+			children = (
+				924CB66F197B756F00103769 /* Remote Control */,
+				924CB68E197B757000103769 /* Remote ControlTests */,
+				924CB668197B756F00103769 /* Frameworks */,
+				924CB667197B756F00103769 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		924CB667197B756F00103769 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				924CB666197B756F00103769 /* Remote Control.app */,
+				924CB687197B757000103769 /* Remote ControlTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		924CB668197B756F00103769 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				924CB69E197B79C500103769 /* CoreMotion.framework */,
+				924CB669197B756F00103769 /* Foundation.framework */,
+				924CB66B197B756F00103769 /* CoreGraphics.framework */,
+				924CB66D197B756F00103769 /* UIKit.framework */,
+				924CB688197B757000103769 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		924CB66F197B756F00103769 /* Remote Control */ = {
+			isa = PBXGroup;
+			children = (
+				924CB678197B756F00103769 /* RemoteAppDelegate.h */,
+				924CB679197B756F00103769 /* RemoteAppDelegate.m */,
+				924CB67B197B756F00103769 /* Main.storyboard */,
+				924CB67E197B756F00103769 /* RemoteViewController.h */,
+				924CB67F197B756F00103769 /* RemoteViewController.m */,
+				924CB681197B756F00103769 /* Images.xcassets */,
+				924CB670197B756F00103769 /* Supporting Files */,
+			);
+			path = "Remote Control";
+			sourceTree = "<group>";
+		};
+		924CB670197B756F00103769 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				924CB671197B756F00103769 /* Remote Control-Info.plist */,
+				924CB672197B756F00103769 /* InfoPlist.strings */,
+				924CB675197B756F00103769 /* main.m */,
+				924CB677197B756F00103769 /* Remote Control-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		924CB68E197B757000103769 /* Remote ControlTests */ = {
+			isa = PBXGroup;
+			children = (
+				924CB694197B757000103769 /* Remote_ControlTests.m */,
+				924CB68F197B757000103769 /* Supporting Files */,
+			);
+			path = "Remote ControlTests";
+			sourceTree = "<group>";
+		};
+		924CB68F197B757000103769 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				924CB690197B757000103769 /* Remote ControlTests-Info.plist */,
+				924CB691197B757000103769 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		924CB665197B756F00103769 /* Remote Control */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924CB698197B757000103769 /* Build configuration list for PBXNativeTarget "Remote Control" */;
+			buildPhases = (
+				924CB662197B756F00103769 /* Sources */,
+				924CB663197B756F00103769 /* Frameworks */,
+				924CB664197B756F00103769 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Remote Control";
+			productName = "Remote Control";
+			productReference = 924CB666197B756F00103769 /* Remote Control.app */;
+			productType = "com.apple.product-type.application";
+		};
+		924CB686197B757000103769 /* Remote ControlTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924CB69B197B757000103769 /* Build configuration list for PBXNativeTarget "Remote ControlTests" */;
+			buildPhases = (
+				924CB683197B757000103769 /* Sources */,
+				924CB684197B757000103769 /* Frameworks */,
+				924CB685197B757000103769 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				924CB68D197B757000103769 /* PBXTargetDependency */,
+			);
+			name = "Remote ControlTests";
+			productName = "Remote ControlTests";
+			productReference = 924CB687197B757000103769 /* Remote ControlTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		924CB65E197B756F00103769 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Remote;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Zach Lite";
+				TargetAttributes = {
+					924CB686197B757000103769 = {
+						TestTargetID = 924CB665197B756F00103769;
+					};
+				};
+			};
+			buildConfigurationList = 924CB661197B756F00103769 /* Build configuration list for PBXProject "Remote Control" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 924CB65D197B756F00103769;
+			productRefGroup = 924CB667197B756F00103769 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				924CB665197B756F00103769 /* Remote Control */,
+				924CB686197B757000103769 /* Remote ControlTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		924CB664197B756F00103769 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB682197B756F00103769 /* Images.xcassets in Resources */,
+				924CB674197B756F00103769 /* InfoPlist.strings in Resources */,
+				924CB67D197B756F00103769 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924CB685197B757000103769 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB693197B757000103769 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		924CB662197B756F00103769 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB67A197B756F00103769 /* RemoteAppDelegate.m in Sources */,
+				924CB676197B756F00103769 /* main.m in Sources */,
+				924CB680197B756F00103769 /* RemoteViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924CB683197B757000103769 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924CB695197B757000103769 /* Remote_ControlTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		924CB68D197B757000103769 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 924CB665197B756F00103769 /* Remote Control */;
+			targetProxy = 924CB68C197B757000103769 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		924CB672197B756F00103769 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				924CB673197B756F00103769 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		924CB67B197B756F00103769 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				924CB67C197B756F00103769 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		924CB691197B757000103769 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				924CB692197B757000103769 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		924CB696197B757000103769 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		924CB697197B757000103769 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		924CB699197B757000103769 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Remote Control/Remote Control-Prefix.pch";
+				INFOPLIST_FILE = "Remote Control/Remote Control-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		924CB69A197B757000103769 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Remote Control/Remote Control-Prefix.pch";
+				INFOPLIST_FILE = "Remote Control/Remote Control-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		924CB69C197B757000103769 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Remote Control.app/Remote Control";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Remote Control/Remote Control-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Remote ControlTests/Remote ControlTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		924CB69D197B757000103769 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Remote Control.app/Remote Control";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Remote Control/Remote Control-Prefix.pch";
+				INFOPLIST_FILE = "Remote ControlTests/Remote ControlTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		924CB661197B756F00103769 /* Build configuration list for PBXProject "Remote Control" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924CB696197B757000103769 /* Debug */,
+				924CB697197B757000103769 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		924CB698197B757000103769 /* Build configuration list for PBXNativeTarget "Remote Control" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924CB699197B757000103769 /* Debug */,
+				924CB69A197B757000103769 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		924CB69B197B757000103769 /* Build configuration list for PBXNativeTarget "Remote ControlTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924CB69C197B757000103769 /* Debug */,
+				924CB69D197B757000103769 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 924CB65E197B756F00103769 /* Project object */;
+}

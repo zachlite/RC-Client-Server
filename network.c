@@ -10,19 +10,34 @@
 #include <stdlib.h>
 #include "network.h"
 
-#include <pthread.h>
 
 
 
-void* net_client_handler(void *arg);
-bool net_is_client_there(int fd);
+
+//"<!DOCTYPE html>
+// <html>
+//  <head>
+//      <title>RC Car</title>
+//  </head>
+//  <body>
+//      <div style=\"text-align: center\">
+//          <h1>RC Car</h1>
+//          <h3>From Zach's webserver.</h3>
+//          <br><br>
+                
+//      </div>
+//  </body>
+// </html>";
+
+
+
+
+
 
 void* client_handler(void *arg);
 
-typedef struct{
-    char client_addr[INET6_ADDRLEN];
-    int new_client_fd;
-}new_client;
+
+
 
 
 int net_open(const char *host, const char *port, HostType_t hostType)
@@ -98,98 +113,6 @@ int net_open(const char *host, const char *port, HostType_t hostType)
 
 
 
-
-
-int net_listen_for_client(int sockfd)
-{
-    printf("Waiting for connections\n");
-    
-    
-    int listenStatus;
-    
-    listenStatus = listen(sockfd, 3);
-    
-    if (listenStatus == -1) {
-        fprintf(stderr, "listen failed %s\n", strerror(errno));
-        return -1;
-    }
-    
-    
-    
-    
-    char s[INET6_ADDRSTRLEN];
-    //    char *welcomeMessage = "Joined Server successfully";
-    //    unsigned long msgLength; long byte_sent;
-    //    msgLength = strlen(welcomeMessage);
-    
-    
-    while (1) //continuously listen for incoming connections
-    {
-
-        struct sockaddr_storage their_addr;
-        socklen_t addr_size;
-        int newfd;
-        addr_size = sizeof(their_addr);
-        
-        
-        //accept a new connection and get its file descriptor
-        newfd = accept(sockfd, (struct sockaddr *)&their_addr, &addr_size);
-        
-        
-        inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof(s));
-        printf("Server received a connection from %s\n", s);
-        
-
-        //thread creation
-        pthread_t thread_id;
-        void *thread_status;
-
-        new_client *newc = malloc(sizeof(*newc));
-        newc->new_client_fd = newfd;
-        strncpy(newc->client_addr, s, INET6_ADDRLEN);
-
-
-        if (pthread_create(&thread_id, NULL, &net_client_handler, newc) != 0)
-        {
-            fprintf(stderr, "can't create thread %s\n", strerror(errno));
-            free(newc);
-        }
-
-
-
-
-
-
-        //net_client_handler(newfd, s);
-        
-        //then spawn a new thread to handle it.
-        //        while (1)
-        //        {
-        //            sleep(1);
-        //            byte_sent = send(newfd, welcomeMessage, msgLength, 0);
-        //
-        //            if (byte_sent == -1)
-        //            {
-        //                fprintf(stderr, "%s\n", strerror(errno));
-        //
-        //            }
-        //        }
-        
-        //then close the socket when the thread is done..
-        //close(newfd);
-        
-        
-        
-    }
-
-    //pthread_join(thread_id, &thread_status);
-
-    
-    
-    
-    return 0;
-}
-
 void* client_handler(void *arg)
 {
 
@@ -204,7 +127,7 @@ void* client_handler(void *arg)
     {
         sleep(1);
         
-        if (net_is_client_there(clientfd))
+        if (net_is_connected(clientfd))
         {
             printf("handling client %d\n", clientfd);
         }
@@ -223,119 +146,21 @@ void* client_handler(void *arg)
 
 
 
-void* net_client_handler(void *arg)
+void net_print_received_data(char *data)
 {
-    char *welcomeMessage = "Joined Server successfully";
-    unsigned long msgLength; long byte_sent;
-    msgLength = strlen(welcomeMessage);
-
-
-    new_client *nc = arg;
-    int clientfd = nc->new_client_fd;
-    // char *clientaddr = nc->client_addr;
-
-
-    bool client_connected = true;
-    
-
-    char buffer[512];
-
-    if (net_is_client_there(clientfd))
-        {
-
-            recv(clientfd, buffer, sizeof(buffer), 0);
-            printf("%s",buffer);
-
-            if (!strncmp(buffer, "GET", 3)){
-                printf("GET request!\n");
-                if (!strncmp(buffer, get_index, sizeof(index))) {
-                    printf("GET INDEX REQUEST\n");
-                }
-            }
-            else
-            {
-                printf("no GET request\n");
-            }
-
-            printf("sending data to client\n");
-            byte_sent = send(clientfd,index_data, sizeof(index_data), 0);
-                
-            if (byte_sent == -1)
-            {
-               fprintf(stderr, "send failed %s\n", strerror(errno));
-                    
-            }
-        }
-
-    // while (client_connected) //while client server connection is present
-    // {
-
-        
-
-
-
-
-
-    //     if (net_is_client_there(clientfd))
-    //     {
-
-    //         recv(clientfd, buffer, sizeof(buffer), 0);
-    //         printf("%s",buffer);
-
-
-
-    //         printf("sending data to client\n");
-    //         byte_sent = send(clientfd,index_data, sizeof(index_data), 0);
-                
-    //         if (byte_sent == -1)
-    //         {
-    //            fprintf(stderr, "send failed %s\n", strerror(errno));
-                    
-    //         }
-    //     }
-    //     else
-    //     {
-    //         client_connected = false;
-    //     }
-
-    //     sleep(1);
-
-
-    //     // sleep(1);
-    //     // printf("sending data to client\n");
-    //     // byte_sent = send(clientfd, welcomeMessage, msgLength, 0);
-        
-    //     // if (byte_sent == -1)
-    //     // {
-    //     //     fprintf(stderr, "send failed %s\n", strerror(errno));
-            
-    //     // }
-    
-    // }
-    
-    free(nc);
-
-    close(clientfd);
-    printf("client disconnected\n");
-    return NULL;
-}
-
-int send_index(int clientfd)
-{
-
-
-    return 0;
+    printf("new msg -------> %s\n", data);
 }
 
 
-bool net_is_client_there(int fd)
+
+bool net_is_connected(int fd)
 {
     struct pollfd pfd;
     pfd.fd = fd;
     pfd.events = POLLERR | POLLHUP; //bitmap of events we're interested in
     pfd.revents = 0; //bitmap of events that took place
 
-    printf("Testing client connection\n");
+    printf("Testing connection\n");
     int poll_value = poll(&pfd, 1, 100);
     if (poll_value > 0) 
     {                 
@@ -358,6 +183,7 @@ bool net_is_client_there(int fd)
     }  
     else if(poll_value == 0)
     {
+        printf("client connected\n");
         return true;
     }
     else
@@ -369,9 +195,6 @@ bool net_is_client_there(int fd)
 
 
 }
-
-
-
 
 
 
