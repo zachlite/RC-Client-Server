@@ -92,8 +92,8 @@ void* serv_client_handler(void *arg)
             net_print_received_data(client_request);
             
             //respond
-            strcat(client_request, ": request received by server");
-            send(clientfd, client_request, sizeof(client_request), 0);
+            //strcat(client_request, ": request received by server");
+            //send(clientfd, client_request, sizeof(client_request), 0);
 
             //issue command to car
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9214B04B197C74E8008BB20F /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 9214B04A197C74E8008BB20F /* wheel.png */; };
+		9214B04E197C7ABE008BB20F /* NetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9214B04D197C7ABE008BB20F /* NetworkClient.m */; };
+		9214B051197C7B0E008BB20F /* network.c in Sources */ = {isa = PBXBuildFile; fileRef = 9214B04F197C7B0E008BB20F /* network.c */; };
 		924CB66A197B756F00103769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB669197B756F00103769 /* Foundation.framework */; };
 		924CB66C197B756F00103769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66B197B756F00103769 /* CoreGraphics.framework */; };
 		924CB66E197B756F00103769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66D197B756F00103769 /* UIKit.framework */; };
@@ -35,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9214B04A197C74E8008BB20F /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
+		9214B04C197C7ABE008BB20F /* NetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkClient.h; sourceTree = "<group>"; };
+		9214B04D197C7ABE008BB20F /* NetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkClient.m; sourceTree = "<group>"; };
+		9214B04F197C7B0E008BB20F /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = ../../network.c; sourceTree = "<group>"; };
+		9214B050197C7B0E008BB20F /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = ../../network.h; sourceTree = "<group>"; };
 		924CB666197B756F00103769 /* Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		924CB669197B756F00103769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		924CB66B197B756F00103769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -82,6 +90,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9214B052197C7B19008BB20F /* network */ = {
+			isa = PBXGroup;
+			children = (
+				9214B04F197C7B0E008BB20F /* network.c */,
+				9214B050197C7B0E008BB20F /* network.h */,
+			);
+			name = network;
+			sourceTree = "<group>";
+		};
 		924CB65D197B756F00103769 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +138,10 @@
 				924CB67B197B756F00103769 /* Main.storyboard */,
 				924CB67E197B756F00103769 /* RemoteViewController.h */,
 				924CB67F197B756F00103769 /* RemoteViewController.m */,
+				9214B04D197C7ABE008BB20F /* NetworkClient.m */,
+				9214B04C197C7ABE008BB20F /* NetworkClient.h */,
+				9214B052197C7B19008BB20F /* network */,
+				9214B04A197C74E8008BB20F /* wheel.png */,
 				924CB681197B756F00103769 /* Images.xcassets */,
 				924CB670197B756F00103769 /* Supporting Files */,
 			);
@@ -234,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				924CB682197B756F00103769 /* Images.xcassets in Resources */,
+				9214B04B197C74E8008BB20F /* wheel.png in Resources */,
 				924CB674197B756F00103769 /* InfoPlist.strings in Resources */,
 				924CB67D197B756F00103769 /* Main.storyboard in Resources */,
 			);
@@ -257,6 +279,8 @@
 				924CB67A197B756F00103769 /* RemoteAppDelegate.m in Sources */,
 				924CB676197B756F00103769 /* main.m in Sources */,
 				924CB680197B756F00103769 /* RemoteViewController.m in Sources */,
+				9214B04E197C7ABE008BB20F /* NetworkClient.m in Sources */,
+				9214B051197C7B0E008BB20F /* network.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +485,7 @@
 				924CB69A197B757000103769 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		924CB69B197B757000103769 /* Build configuration list for PBXNativeTarget "Remote ControlTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +494,7 @@
 				924CB69D197B757000103769 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import "NetworkClient.h"
+
 
 @interface RemoteViewController : UIViewController <UIAccelerometerDelegate>
+
+{
+    NetworkClient *client;
+}
+
 
 @property (strong, nonatomic) CMMotionManager *accelManager;
 @property (strong, nonatomic) UIView *movingImage;
@@ -21,5 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *y_label;
 @property (weak, nonatomic) IBOutlet UILabel *z_label;
 
+@property (weak, nonatomic) IBOutlet UIImageView *wheel;
+@property (weak, nonatomic) IBOutlet UIView *status_light;
 
 @end
