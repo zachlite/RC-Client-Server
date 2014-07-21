@@ -22,9 +22,11 @@
 
 -(id)initWithHost:(char *)host Port:(char*)port;
 
--(void)connectToHost;
+-(int)connectToHost;
 -(int)sendData:(char*)data onSocket:(int)sockfd;
 -(int)receiveDataFromSocket:(int)sockfd;
+-(void)disconnect;
+-(void)checkConnectionStatus;
 
 
 

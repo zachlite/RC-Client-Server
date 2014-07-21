@@ -28,7 +28,7 @@
 }
 
 
--(void)connectToHost
+-(int)connectToHost
 {
     if (!self.isConnected) {
      
@@ -40,20 +40,32 @@
             char message[] = "iPhoneClient!";
             [self sendData:message onSocket:self.sockFileDescriptor];
             [self receiveDataFromSocket:self.sockFileDescriptor];
+            return 0;
         }
         else{
             self.isConnected = NO;
+            return -1;
         }
         
     }
-    
+    return -1;
     
 }
 
+
+
 -(int)sendData:(char *)data onSocket:(int)sockfd
 {
-    
-    send(sockfd, data, sizeof(data), 0);
+    if(net_is_connected(sockfd))
+    {
+        send(sockfd, data, sizeof(data), 0);
+
+    }
+    else
+    {
+        close(sockfd);
+        self.isConnected = NO;
+    }
     
     return 0;
 }
@@ -69,6 +81,11 @@
     return 0;
 }
 
+-(void)disconnect
+{
+    close(self.sockFileDescriptor);
+    self.isConnected = NO;
+}
 
 -(void)printClientInfo
 {

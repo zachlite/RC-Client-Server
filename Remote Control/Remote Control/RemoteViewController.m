@@ -40,6 +40,8 @@
 
 @synthesize wheel;
 @synthesize status_light;
+@synthesize status_message;
+@synthesize NetworkAccessButton;
 //@synthesize delta_throttle;
 //@synthesize old_throttle;
 
@@ -94,16 +96,31 @@
     [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(throttleEngine) userInfo:nil repeats:YES];
 
     
-    client = [[NetworkClient alloc] initWithHost:"192.168.1.101" Port:"5001"];
+    client = [[NetworkClient alloc] initWithHost:"192.168.1.101" Port:"5000"];
     
     
 }
 
 - (IBAction)connect:(id)sender {
-    [client connectToHost];
+    
+    
     if (client.isConnected) {
-        self.status_light.backgroundColor = [UIColor greenColor];
+        [client disconnect];
+        self.status_message.text = @"not connected";
+        self.status_light.backgroundColor = [UIColor redColor];
+        [self.NetworkAccessButton setTitle:@"Connect" forState:UIControlStateNormal];
     }
+    else{
+        if([client connectToHost] != -1)
+        {
+            self.status_message.text = @"connected";
+            self.status_light.backgroundColor = [UIColor greenColor];
+            [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+        }
+      
+        
+    }
+    
     
 }
 
@@ -170,7 +187,7 @@
     CGAffineTransform transform = CGAffineTransformMakeRotation(self.direction * (M_2_PI / 90));
     self.wheel.transform = transform;
     
-    self.direction_label.text = [self double_to_string:self.direction / THRESHOLD];
+    //self.direction_label.text = [self double_to_string:self.direction / THRESHOLD];
     
     
     self.old_direction = accelManager.accelerometerData.acceleration.y;

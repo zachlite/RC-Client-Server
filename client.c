@@ -27,6 +27,8 @@ int cli_listen_for_server(int sockfd)
     recv(sockfd, welcome_message, sizeof(welcome_message) - 1, 0);
     net_print_received_data(welcome_message);
 
+    cli_send_to_server(sockfd);
+
     return 0;
 }
 
@@ -39,7 +41,8 @@ int cli_send_to_server(int sockfd)
     {
         if (net_is_connected(sockfd))
         {
-            //send data
+           char intro[] = "client here!";
+           send(sockfd, intro, sizeof(intro), 0);
 
         }
         else

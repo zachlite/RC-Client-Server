@@ -30,5 +30,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *wheel;
 @property (weak, nonatomic) IBOutlet UIView *status_light;
+@property (weak, nonatomic) IBOutlet UIButton *NetworkAccessButton;
+@property (weak, nonatomic) IBOutlet UILabel *status_message;
 
 @end
