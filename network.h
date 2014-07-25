@@ -32,6 +32,7 @@ typedef struct
 {
    signed char throttle;
    signed char direction;
+    signed char count;
     
 }Data_Packet;
 

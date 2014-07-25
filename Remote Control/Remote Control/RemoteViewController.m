@@ -104,11 +104,11 @@
     
     [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:.005 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
     
     [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateDirection) userInfo:nil repeats:YES];
     
-    
+   %
     [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateThrottle) userInfo:nil repeats:YES];
 
     
@@ -226,11 +226,15 @@
     
     if (client.isConnected)
     {
-        unsigned short packet_buffer;
-        memcpy(&packet_buffer, &packet, sizeof(packet));
+        if (packet.count < 1) {
+            packet.count = 1;
+        }
+        else{
+            packet.count ++;
+        }
+        NSLog(@"sending packet %d", packet.count);
         
-        uint16_t NBO_packet = htons(packet_buffer);//network byte order packet
-        [client sendData:&NBO_packet onSocket:client.sockFileDescriptor];
+        [client sendData:&packet onSocket:client.sockFileDescriptor];
     }
 }
 

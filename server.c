@@ -43,7 +43,7 @@ void* serv_client_handler(void *arg)
 
 
     //listen for potential get request
-    recv(clientfd, buffer, sizeof(buffer) - 1, 0);          
+    recv(clientfd, &buffer, sizeof(buffer) - 1, 0);          
     net_print_received_data(buffer);
 
     if (!strncmp(buffer, "GET", 3))
@@ -83,20 +83,19 @@ void* serv_client_handler(void *arg)
 
         if (net_is_connected(clientfd))
         {
-            short int client_packet;
+            
             Data_Packet packet;
+            int bytes_received;
 
 
             printf("listening for client request....\n");
-            recv(clientfd, &client_packet, sizeof(client_packet)-1 , 0);
+            bytes_received = recv(clientfd, &packet, sizeof(packet) + 1 , 0);
             
+            printf("recieved %d bytes\n", bytes_received);
 
-            uint16_t HBO_packet = ntohs((unsigned short)client_packet); 
 
-            memcpy(&packet, &HBO_packet, sizeof(client_packet));
-
-            printf("---------------->throttle: %d\n", packet.throttle);
-            printf("---------------->direction: %d\n", packet.direction);
+            printf("packet # %d\n", packet.count);
+            printf("---------------->throttle: %d ---------------->direction: %d\n", packet.throttle, packet.direction);
 
             //net_print_received_data(packet.throttle);
             //net_print_received_data(packet.direction);

@@ -39,10 +39,12 @@
         
         if (self.sockFileDescriptor != -1) {
 
-            self.isConnected = YES;
             char message[] = "iPhoneClient!";
             [self sendData:message onSocket:self.sockFileDescriptor];
             [self receiveDataFromSocket:self.sockFileDescriptor];
+            
+            self.isConnected = YES;
+
             return 0;
         }
         else{
@@ -64,13 +66,12 @@
 
     if(net_is_connected(sockfd))
     {
-        Data_Packet packet;
-        uint16_t HBO_packet = ntohs((unsigned short)data);
-        
-        memcpy(&packet, &HBO_packet, sizeof(HBO_packet));
-        NSLog(@"sent %d %d", packet.direction, packet.throttle);
-        
-        send(sockfd, data, sizeof(data), 0);
+//        Data_Packet packet = *(Data_Packet*)data;
+//        NSLog(@"sending %d %d", packet.throttle, packet.direction);
+        if(send(sockfd, data, sizeof(data), 0) == -1)
+        {
+            fprintf(stderr, "%s\n", strerror(errno));
+        }
     }
     else
     {
