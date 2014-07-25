@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>262DB70D-802B-4E39-BA46-74AB0770D73B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Remote Control</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AFC1E785-74FA-4D18-B165-3A01EAB7B461</key>
+		<string>https://github.com/zachlite/RC-Client-Server.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Remote Control/Remote Control.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AFC1E785-74FA-4D18-B165-3A01EAB7B461</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/zachlite/RC-Client-Server.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AFC1E785-74FA-4D18-B165-3A01EAB7B461</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AFC1E785-74FA-4D18-B165-3A01EAB7B461</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RC-car</string>
+		</dict>
+	</array>
+</dict>
+</plist>

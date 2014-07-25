@@ -83,13 +83,23 @@ void* serv_client_handler(void *arg)
 
         if (net_is_connected(clientfd))
         {
-            char client_request[512];
+            short int client_packet;
+            Data_Packet packet;
 
-            //listen for client GET request
+
             printf("listening for client request....\n");
-            recv(clientfd, client_request, sizeof(client_request) - 1, 0);
+            recv(clientfd, &client_packet, sizeof(client_packet)-1 , 0);
             
-            net_print_received_data(client_request);
+
+            uint16_t HBO_packet = ntohs((unsigned short)client_packet); 
+
+            memcpy(&packet, &HBO_packet, sizeof(client_packet));
+
+            printf("---------------->throttle: %d\n", packet.throttle);
+            printf("---------------->direction: %d\n", packet.direction);
+
+            //net_print_received_data(packet.throttle);
+            //net_print_received_data(packet.direction);
             
             //respond
             //strcat(client_request, ": request received by server");

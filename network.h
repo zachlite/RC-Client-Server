@@ -28,6 +28,13 @@ typedef struct{
     int new_client_fd;
 }new_client;
 
+typedef struct
+{
+   signed char throttle;
+   signed char direction;
+    
+}Data_Packet;
+
 
 int net_open(const char *host, const char *port, HostType_t hostType);
 bool net_is_connected(int fd);

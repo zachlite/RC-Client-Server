@@ -160,7 +160,7 @@ bool net_is_connected(int fd)
     pfd.events = POLLERR | POLLHUP; //bitmap of events we're interested in
     pfd.revents = 0; //bitmap of events that took place
 
-    printf("Testing connection\n");
+    // printf("Testing connection\n");
     int poll_value = poll(&pfd, 1, 100);
     if (poll_value > 0) 
     {                 
@@ -171,19 +171,19 @@ bool net_is_connected(int fd)
         if (recv(fd, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) 
         {
             // if recv returns zero, that means the connection has been closed:
-            printf("client not connected\n");
+            // printf("client not connected\n");
             return false;
         }
         else
         {
             //there is data on the socket?
-            printf("client connected\n");
+            // printf("client connected\n");
             return true;
         }
     }  
     else if(poll_value == 0)
     {
-        printf("client connected\n");
+        // printf("client connected\n");
         return true;
     }
     else

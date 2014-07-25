@@ -9,14 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 #import "NetworkClient.h"
+#import "SettingsViewController.h"
 
 
-@interface RemoteViewController : UIViewController <UIAccelerometerDelegate>
+
+
+
+@interface RemoteViewController : UIViewController <UIAccelerometerDelegate, SettingsViewControllerDelegate>
+
 
 {
-    NetworkClient *client;
+    char HOST[INET6_ADDRSTRLEN];
+    char PORT[INET6_ADDRSTRLEN];
+    
+    Data_Packet packet;
+   
+    
 }
-
 
 @property (strong, nonatomic) CMMotionManager *accelManager;
 @property (strong, nonatomic) UIView *movingImage;
@@ -33,4 +42,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *NetworkAccessButton;
 @property (weak, nonatomic) IBOutlet UILabel *status_message;
 
+@property (nonatomic, retain) NSString *port_string;
+@property (nonatomic, retain) NSString *host_string;
+
+
+
+@property (nonatomic, retain) NetworkClient *client;
 @end

@@ -31,6 +31,9 @@
 -(int)connectToHost
 {
     if (!self.isConnected) {
+        
+        NSLog(@"host is %s", host_addr);
+        NSLog(@"port is %s", port_num);
      
         self.sockFileDescriptor = net_open(host_addr, port_num, CLIENT);
         
@@ -54,12 +57,20 @@
 
 
 
--(int)sendData:(char *)data onSocket:(int)sockfd
+-(int)sendData:(const void *)data onSocket:(int)sockfd
 {
+    
+
+
     if(net_is_connected(sockfd))
     {
+        Data_Packet packet;
+        uint16_t HBO_packet = ntohs((unsigned short)data);
+        
+        memcpy(&packet, &HBO_packet, sizeof(HBO_packet));
+        NSLog(@"sent %d %d", packet.direction, packet.throttle);
+        
         send(sockfd, data, sizeof(data), 0);
-
     }
     else
     {

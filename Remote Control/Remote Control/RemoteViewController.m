@@ -8,6 +8,7 @@
 
 #import "RemoteViewController.h"
 #import "NetworkClient.h"
+#import "SettingsViewController.h"
 #define SENSITIVITY 150
 #define THRESHOLD 90
 
@@ -42,6 +43,11 @@
 @synthesize status_light;
 @synthesize status_message;
 @synthesize NetworkAccessButton;
+
+@synthesize host_string, port_string;
+
+@synthesize client;
+
 //@synthesize delta_throttle;
 //@synthesize old_throttle;
 
@@ -61,8 +67,11 @@
     
     [self.throttle setCenter:CGPointMake(self.view.frame.size.height - 60, self.view.center.x)];
     
+    [self.throttle setContinuous:NO];
+    
     [self.throttle addTarget:self action:@selector(resetThrottle) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
-    //[self.throttle addTarget:self action:@selector(throttleEngine) forControlEvents:UIControlEventAllEvents];
+    
+    //[self.throttle addTarget:self action:@selector(updateThrottle) forControlEvents:UIControlEventAllEvents];
 }
 
 
@@ -90,52 +99,157 @@
     [self.accelManager startAccelerometerUpdates];
     
     
-    [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
-    [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(turnWheel) userInfo:nil repeats:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(throttleEngine) userInfo:nil repeats:YES];
 
     
-    client = [[NetworkClient alloc] initWithHost:"192.168.1.101" Port:"5000"];
+    [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
     
+    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
+    
+    [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateDirection) userInfo:nil repeats:YES];
+    
+    
+    [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateThrottle) userInfo:nil repeats:YES];
+
+    
+
+    
+    
+    
+    
+}
+
+-(void)getFromViewController:(SettingsViewController *)controller :(NSString *)host :(NSString *)port
+{
+
+    
+    if ([host isEqualToString:@""] || [port isEqualToString:@""])
+    {
+        self.host_string = NULL;
+        self.port_string = NULL;
+    }
+    else
+    {
+        self.host_string = host;
+        self.port_string = port;
+    }
+    
+
+    
+    char hostBuffer[INET6_ADDRSTRLEN];
+    char portBuffer[INET6_ADDRSTRLEN];
+
+    if(![host getCString:hostBuffer maxLength:sizeof(hostBuffer) encoding:NSUTF8StringEncoding])
+    {
+        NSLog(@"host conversion error");
+    }
+    if(![port getCString:portBuffer maxLength:sizeof(portBuffer) encoding:NSUTF8StringEncoding])
+    {
+        NSLog(@"port conversion error");
+    }
+    
+  
+    
+    strncpy(PORT, portBuffer, sizeof(PORT));
+    strncpy(HOST, hostBuffer, sizeof(HOST));
+    
+    
+    
+    
+}
+- (IBAction)defaultSettings:(id)sender {
+    self.host_string = @"d";
+    self.port_string = @"3";
+    
+    strncpy(PORT, "5000", sizeof("5000"));
+    strncpy(HOST, "192.168.1.227", sizeof("192.168.1.227"));
+
+    
+}
+
+- (IBAction)settingsPressed:(id)sender {
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
+    settingsViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    settingsViewController.delegate = self;
+    
+    [self presentViewController:settingsViewController animated:YES completion:nil];
     
 }
 
 - (IBAction)connect:(id)sender {
     
-    
-    if (client.isConnected) {
-        [client disconnect];
-        self.status_message.text = @"not connected";
-        self.status_light.backgroundColor = [UIColor redColor];
-        [self.NetworkAccessButton setTitle:@"Connect" forState:UIControlStateNormal];
+
+    if (self.host_string == NULL || self.port_string == NULL)
+    {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Info" message:@"Need configuration info" delegate:self cancelButtonTitle:@"got it." otherButtonTitles:nil, nil];
+            [alert show];
+        
     }
-    else{
-        if([client connectToHost] != -1)
-        {
-            self.status_message.text = @"connected";
-            self.status_light.backgroundColor = [UIColor greenColor];
-            [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+    else
+    {
+        
+  
+        if (!self.client) {
+            NSLog(@"client lazily instantiated");
+            self.client = [[NetworkClient alloc] initWithHost:HOST Port:PORT];
         }
-      
+     
+        if (client.isConnected) {
+            [client disconnect];
+            self.status_message.text = @"not connected";
+            self.status_light.backgroundColor = [UIColor redColor];
+            [self.NetworkAccessButton setTitle:@"Connect" forState:UIControlStateNormal];
+        }
+        else{
+            if([client connectToHost] != -1)
+            {
+                self.status_message.text = @"connected";
+                self.status_light.backgroundColor = [UIColor greenColor];
+                [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+            }
+            
+            
+        }
         
     }
     
     
+    
+    
+    
+}
+
+-(void)sendCarData
+{
+    
+    if (client.isConnected)
+    {
+        unsigned short packet_buffer;
+        memcpy(&packet_buffer, &packet, sizeof(packet));
+        
+        uint16_t NBO_packet = htons(packet_buffer);//network byte order packet
+        [client sendData:&NBO_packet onSocket:client.sockFileDescriptor];
+    }
 }
 
 
--(void)throttleEngine
+-(void)updateThrottle
 {
-    //NSLog(@"throttle value: %f ", self.throttle.value);
+    packet.throttle = (char)self.throttle.value;
+}
+
+-(void)updateDirection
+{
+    packet.direction = (char)self.direction;
     
-    if (client.isConnected) {
-        char message[10];
-        sprintf(message, "%f", self.throttle.value);
-        [client sendData:message onSocket:client.sockFileDescriptor];
+    if (abs(packet.direction) < 10)
+    {
+        packet.direction = 0;
     }
     
-    
+    //NSLog(@"direction is %d", packet.direction);
 }
 
 -(void)resetThrottle
@@ -144,7 +258,7 @@
         [self.throttle setValue:0.0 animated:YES];
     }completion:^(BOOL finished){
         if (finished) {
-            [self throttleEngine];
+            [self updateThrottle];
         }
     }];
 }
@@ -194,7 +308,20 @@
 
 }
 
-- (IBAction)Calibrate:(id)sender {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchPoint = [touch locationInView:self.view];
+    
+    
+    if (CGRectContainsPoint(self.wheel.frame, touchPoint))
+    {
+        [self Calibrate];
+    }
+    
+}
+
+- (void)Calibrate{
     
     //[self.movingImage setCenter:CGPointMake(self.view.center.y, self.view.center.x)];
     self.direction = 0;

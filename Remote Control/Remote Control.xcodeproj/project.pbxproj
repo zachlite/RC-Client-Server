@@ -10,6 +10,8 @@
 		9214B04B197C74E8008BB20F /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 9214B04A197C74E8008BB20F /* wheel.png */; };
 		9214B04E197C7ABE008BB20F /* NetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9214B04D197C7ABE008BB20F /* NetworkClient.m */; };
 		9214B051197C7B0E008BB20F /* network.c in Sources */ = {isa = PBXBuildFile; fileRef = 9214B04F197C7B0E008BB20F /* network.c */; };
+		9245B252197F39750047C45B /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9245B250197F39750047C45B /* SettingsViewController.m */; };
+		9245B253197F39750047C45B /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9245B251197F39750047C45B /* SettingsViewController.xib */; };
 		924CB66A197B756F00103769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB669197B756F00103769 /* Foundation.framework */; };
 		924CB66C197B756F00103769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66B197B756F00103769 /* CoreGraphics.framework */; };
 		924CB66E197B756F00103769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66D197B756F00103769 /* UIKit.framework */; };
@@ -43,6 +45,9 @@
 		9214B04D197C7ABE008BB20F /* NetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkClient.m; sourceTree = "<group>"; };
 		9214B04F197C7B0E008BB20F /* network.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = network.c; path = ../../network.c; sourceTree = "<group>"; };
 		9214B050197C7B0E008BB20F /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = ../../network.h; sourceTree = "<group>"; };
+		9245B24F197F39750047C45B /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		9245B250197F39750047C45B /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		9245B251197F39750047C45B /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		924CB666197B756F00103769 /* Remote Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Remote Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		924CB669197B756F00103769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		924CB66B197B756F00103769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -102,6 +107,9 @@
 		924CB65D197B756F00103769 = {
 			isa = PBXGroup;
 			children = (
+				9245B24F197F39750047C45B /* SettingsViewController.h */,
+				9245B250197F39750047C45B /* SettingsViewController.m */,
+				9245B251197F39750047C45B /* SettingsViewController.xib */,
 				924CB66F197B756F00103769 /* Remote Control */,
 				924CB68E197B757000103769 /* Remote ControlTests */,
 				924CB668197B756F00103769 /* Frameworks */,
@@ -258,6 +266,7 @@
 				9214B04B197C74E8008BB20F /* wheel.png in Resources */,
 				924CB674197B756F00103769 /* InfoPlist.strings in Resources */,
 				924CB67D197B756F00103769 /* Main.storyboard in Resources */,
+				9245B253197F39750047C45B /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +288,7 @@
 				924CB67A197B756F00103769 /* RemoteAppDelegate.m in Sources */,
 				924CB676197B756F00103769 /* main.m in Sources */,
 				924CB680197B756F00103769 /* RemoteViewController.m in Sources */,
+				9245B252197F39750047C45B /* SettingsViewController.m in Sources */,
 				9214B04E197C7ABE008BB20F /* NetworkClient.m in Sources */,
 				9214B051197C7B0E008BB20F /* network.c in Sources */,
 			);
