@@ -119,7 +119,7 @@ void* client_handler(void *arg)
 
     new_client *nc = arg;
     int clientfd = nc->new_client_fd;
-    char *clientaddr = nc->client_addr;
+    //char *clientaddr = nc->client_addr;
 
 
     bool client_connected = true;

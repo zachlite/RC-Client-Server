@@ -41,6 +41,7 @@
 
             char message[] = "iPhoneClient!";
             [self sendData:message onSocket:self.sockFileDescriptor];
+            
             [self receiveDataFromSocket:self.sockFileDescriptor];
             
             self.isConnected = YES;
@@ -49,6 +50,14 @@
         }
         else{
             self.isConnected = NO;
+            
+            NSString *error = [NSString stringWithFormat:@"%s", strerror(errno)];
+            
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:error delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    
+            [alert show];
+            
             return -1;
         }
         
@@ -62,22 +71,27 @@
 -(int)sendData:(const void *)data onSocket:(int)sockfd
 {
     
-
-
-    if(net_is_connected(sockfd))
+    NSLog(@"sending data of size %lu", sizeof(Data_Packet));
+    
+    if (net_is_connected(self.sockFileDescriptor))
     {
-//        Data_Packet packet = *(Data_Packet*)data;
-//        NSLog(@"sending %d %d", packet.throttle, packet.direction);
-        if(send(sockfd, data, sizeof(data), 0) == -1)
-        {
-            fprintf(stderr, "%s\n", strerror(errno));
-        }
+        NSLog(@"client is connected");
     }
-    else
+    else{
+        NSLog(@"client is not connected");
+    }
+    
+    int send_result = send(sockfd, data, sizeof(Data_Packet), 0);
+    if(send_result == -1)
     {
+        fprintf(stderr, "%s\n", strerror(errno));
+        
         close(sockfd);
         self.isConnected = NO;
+        exit(EXIT_FAILURE);
     }
+    
+
     
     return 0;
 }

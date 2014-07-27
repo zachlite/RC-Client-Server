@@ -9,8 +9,8 @@
 #import "RemoteViewController.h"
 #import "NetworkClient.h"
 #import "SettingsViewController.h"
-#define SENSITIVITY 150
-#define THRESHOLD 90
+#define SENSITIVITY 75
+#define THRESHOLD 50
 
 @interface RemoteViewController ()
 
@@ -26,7 +26,6 @@
 @end
 
 @implementation RemoteViewController
-@synthesize y_label, x_label, z_label;
 @synthesize accelManager;
 @synthesize movingImage;
 
@@ -104,11 +103,11 @@
     
     [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:.005 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
     
     [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateDirection) userInfo:nil repeats:YES];
     
-   %
+   
     [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateThrottle) userInfo:nil repeats:YES];
 
     
@@ -205,6 +204,7 @@
         else{
             if([client connectToHost] != -1)
             {
+                PacketsSentInCurrentSession = 0;
                 self.status_message.text = @"connected";
                 self.status_light.backgroundColor = [UIColor greenColor];
                 [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
@@ -226,14 +226,8 @@
     
     if (client.isConnected)
     {
-        if (packet.count < 1) {
-            packet.count = 1;
-        }
-        else{
-            packet.count ++;
-        }
-        NSLog(@"sending packet %d", packet.count);
-        
+        NSLog(@"Sending packet #%d", ++PacketsSentInCurrentSession);
+        NSLog(@"%d %d", packet.throttle, packet.direction);
         [client sendData:&packet onSocket:client.sockFileDescriptor];
     }
 }
@@ -302,10 +296,10 @@
     
     //[self.movingImage setCenter:CGPointMake(self.screen_center_x + self.direction, self.movingImage.center.y)];// + self.delta_throttle)];
     
-    CGAffineTransform transform = CGAffineTransformMakeRotation(self.direction * (M_2_PI / 90));
+    CGAffineTransform transform = CGAffineTransformMakeRotation(self.direction * (M_2_PI / 45));
     self.wheel.transform = transform;
     
-    //self.direction_label.text = [self double_to_string:self.direction / THRESHOLD];
+//    self.direction_label.text = [self double_to_string:(self.direction)];
     
     
     self.old_direction = accelManager.accelerometerData.acceleration.y;

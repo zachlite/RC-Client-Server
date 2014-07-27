@@ -23,7 +23,8 @@
     char PORT[INET6_ADDRSTRLEN];
     
     Data_Packet packet;
-   
+    
+    int PacketsSentInCurrentSession;
     
 }
 
@@ -33,9 +34,6 @@
 @property (weak, nonatomic) IBOutlet UISlider *throttle;
 @property (weak, nonatomic) IBOutlet UILabel *direction_label;
 
-@property (weak, nonatomic) IBOutlet UILabel *x_label;
-@property (weak, nonatomic) IBOutlet UILabel *y_label;
-@property (weak, nonatomic) IBOutlet UILabel *z_label;
 
 @property (weak, nonatomic) IBOutlet UIImageView *wheel;
 @property (weak, nonatomic) IBOutlet UIView *status_light;

@@ -75,36 +75,69 @@ void* serv_client_handler(void *arg)
 
     //by this point, the type of client has been established.
 
+    //launch processing thread
+
+
+    //here we listen for client requests, and load them on to the queue to be processed
+
     bool client_connected = true;
-    
+    int packet_count = 0;
+
+    //int size = sizeof(char);
+
     while (client_connected)
     {
-        
-
-        if (net_is_connected(clientfd))
+        if(1)
+        //if (net_is_connected(clientfd))
         {
-            
+            // char packet;
             Data_Packet packet;
             int bytes_received;
 
 
-            printf("listening for client request....\n");
-            bytes_received = recv(clientfd, &packet, sizeof(packet) + 1 , 0);
+            //printf("listening for client request....\n");
+            bytes_received = recv(clientfd, &packet, sizeof(packet), 0);
             
-            printf("recieved %d bytes\n", bytes_received);
+            if (bytes_received == 0)
+            {
+                printf("client has disconnected!!!!\n");
+                client_connected = false;
+            }
+
+            else if(bytes_received < sizeof(packet))
+            {
+                printf("recieved %d bytes\n", bytes_received);
+                printf("incomplete transfer!\n");
+            }
 
 
-            printf("packet # %d\n", packet.count);
-            printf("---------------->throttle: %d ---------------->direction: %d\n", packet.throttle, packet.direction);
+            else
+            {
+                //printf("recieved %d bytes\n", bytes_received);
 
-            //net_print_received_data(packet.throttle);
-            //net_print_received_data(packet.direction);
-            
-            //respond
-            //strcat(client_request, ": request received by server");
-            //send(clientfd, client_request, sizeof(client_request), 0);
+                packet_count++;
+                
+                printf("%d %d\n", packet.throttle, packet.direction);
 
-            //issue command to car
+
+
+                //printf("packet # %d\n", packet_count);
+                //fprintf(stderr ,"---------------->throttle: %d ---------------->direction: %d\n", packet.throttle, packet.direction);
+                //printf("--------->%x\n", packet);
+
+
+                //net_print_received_data(packet.throttle);
+                //net_print_received_data(packet.direction);
+                
+                //respond
+                //strcat(client_request, ": request received by server");
+                //send(clientfd, client_request, sizeof(client_request), 0);
+
+                //issue command to car
+            }
+
+
+          
 
         }
         else
@@ -113,8 +146,9 @@ void* serv_client_handler(void *arg)
             client_connected = false;
         }
 
-        
     }
+
+    printf("received %d packets\n", packet_count);
 
     // while (client_connected) //while client server connection is present
     // {
@@ -297,6 +331,13 @@ int serve(const char *PORT)
 
 int main(int argc, const char * argv[])
 {
+    for (int i = 0; i < 100; ++i)
+    {
+        printf("*");
+    }
+    printf("\n");
+
+
     if (argv[1] == NULL)
     {
         argv[1] = "5000";

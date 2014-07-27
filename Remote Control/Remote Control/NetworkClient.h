@@ -26,7 +26,7 @@
 -(int)sendData:(const void *)data onSocket:(int)sockfd;
 -(int)receiveDataFromSocket:(int)sockfd;
 -(void)disconnect;
--(void)checkConnectionStatus;
+//-(void)checkConnectionStatus;
 
 
 
