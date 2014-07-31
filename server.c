@@ -41,13 +41,13 @@ void* serv_client_handler(void *arg)
 
     
 
-    printf("sending welcome to client\n");
-    byte_sent = send(clientfd, welcomeMessage, sizeof(welcomeMessage), 0);                
-    if (byte_sent == -1)
-    {
-        fprintf(stderr, "send failed %s\n", strerror(errno));
+    // printf("sending welcome to client\n");
+    // byte_sent = send(clientfd, welcomeMessage, sizeof(welcomeMessage), 0);                
+    // if (byte_sent == -1)
+    // {
+    //     fprintf(stderr, "send failed %s\n", strerror(errno));
 
-    }
+    // }
    
 
 
