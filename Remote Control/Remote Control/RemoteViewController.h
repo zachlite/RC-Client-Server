@@ -24,6 +24,13 @@
     
     Data_Packet packet;
     
+    NSTimer *accelUpdater;
+    NSTimer *dataSender;
+    NSTimer *directionUpdater;
+    NSTimer *throttleUpdater;
+    
+
+    
     int PacketsSentInCurrentSession;
     
 }

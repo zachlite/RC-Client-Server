@@ -38,39 +38,18 @@ void* serv_client_handler(void *arg)
     char *clientaddr = nc->client_addr;
 
 
-    char client_data[512];
-    char buffer[512];
 
-
-    //listen for potential get request
-    recv(clientfd, &buffer, sizeof(buffer) - 1, 0);          
-    net_print_received_data(buffer);
-
-    if (!strncmp(buffer, "GET", 3))
-    {
-        printf("GET request!\n");
-        if (!strncmp(buffer, get_index, sizeof(index))) 
-        {
-            printf("GET INDEX REQUEST\n");
-            strncpy(client_data, index_data, sizeof(client_data));
-            
-        }
-  
-    }
-    else
-    {
-        printf("Connected to a client that DID NOT SEND A GET REQUEST\n");
-        strncpy(client_data, welcomeMessage, sizeof(client_data));
-
-    }
+    
 
     printf("sending welcome to client\n");
-    byte_sent = send(clientfd, client_data, sizeof(client_data), 0);                
+    byte_sent = send(clientfd, welcomeMessage, sizeof(welcomeMessage), 0);                
     if (byte_sent == -1)
     {
         fprintf(stderr, "send failed %s\n", strerror(errno));
-                    
+
     }
+   
+
 
 
     //by this point, the type of client has been established.

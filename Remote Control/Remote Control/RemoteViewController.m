@@ -12,6 +12,11 @@
 #define SENSITIVITY 75
 #define THRESHOLD 50
 
+#define ACCEL_UPDATE_INTERVAL .05
+#define SEND_INTERVAL .01
+#define THROTTLE_UPDATE_INTERVAL .02
+#define DIRECTION_UPDATE_INTERVAL .02
+
 @interface RemoteViewController ()
 
 //@property (nonatomic) double delta_throttle;
@@ -98,25 +103,39 @@
     [self.accelManager startAccelerometerUpdates];
     
     
-    
-
-    
-    [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
-    
-    [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
-    
-    [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateDirection) userInfo:nil repeats:YES];
-    
-   
-    [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(updateThrottle) userInfo:nil repeats:YES];
-
-    
-
-    
-    
-    
-    
 }
+
+-(void)killTimers
+{
+    [accelUpdater invalidate];
+    [dataSender invalidate];
+    [directionUpdater invalidate];
+    [throttleUpdater invalidate];
+}
+
+-(void)initTimers
+{
+    if (![accelUpdater isValid])
+    {
+        accelUpdater = [NSTimer scheduledTimerWithTimeInterval:ACCEL_UPDATE_INTERVAL target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
+    }
+    if (![dataSender isValid])
+    {
+        dataSender = [NSTimer scheduledTimerWithTimeInterval:SEND_INTERVAL target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
+
+    }
+    if (![directionUpdater isValid])
+    {
+        directionUpdater = [NSTimer scheduledTimerWithTimeInterval:DIRECTION_UPDATE_INTERVAL target:self selector:@selector(updateDirection) userInfo:nil repeats:YES];
+
+    }
+    if (![throttleUpdater isValid])
+    {
+        throttleUpdater = [NSTimer scheduledTimerWithTimeInterval:THROTTLE_UPDATE_INTERVAL target:self selector:@selector(updateThrottle) userInfo:nil repeats:YES];
+    }
+   
+}
+
 
 -(void)getFromViewController:(SettingsViewController *)controller :(NSString *)host :(NSString *)port
 {
@@ -167,9 +186,9 @@
 }
 
 - (IBAction)settingsPressed:(id)sender {
+    
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
     settingsViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
     settingsViewController.delegate = self;
     
     [self presentViewController:settingsViewController animated:YES completion:nil];
@@ -194,20 +213,23 @@
             NSLog(@"client lazily instantiated");
             self.client = [[NetworkClient alloc] initWithHost:HOST Port:PORT];
         }
+        
+        
      
         if (client.isConnected) {
             [client disconnect];
-            self.status_message.text = @"not connected";
-            self.status_light.backgroundColor = [UIColor redColor];
-            [self.NetworkAccessButton setTitle:@"Connect" forState:UIControlStateNormal];
+            [self killTimers];
+            [self updateConnectionUI];
+
         }
-        else{
+        else
+        {
             if([client connectToHost] != -1)
             {
                 PacketsSentInCurrentSession = 0;
-                self.status_message.text = @"connected";
-                self.status_light.backgroundColor = [UIColor greenColor];
-                [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+                [self initTimers];
+                [self updateConnectionUI];
+
             }
             
             
@@ -216,8 +238,25 @@
     }
     
     
+}
+
+-(void)updateConnectionUI
+{
+    NSLog(@"updating ui");
     
+    if(client.isConnected)
+    {
+        self.status_message.text = @"connected";
+        self.status_light.backgroundColor = [UIColor greenColor];
+        [self.NetworkAccessButton setTitle:@"Disconnect" forState:UIControlStateNormal];
     
+    }
+    else
+    {
+        self.status_message.text = @"not connected";
+        self.status_light.backgroundColor = [UIColor redColor];
+        [self.NetworkAccessButton setTitle:@"Connect" forState:UIControlStateNormal];
+    }
     
 }
 
@@ -228,7 +267,11 @@
     {
         NSLog(@"Sending packet #%d", ++PacketsSentInCurrentSession);
         NSLog(@"%d %d", packet.throttle, packet.direction);
-        [client sendData:&packet onSocket:client.sockFileDescriptor];
+        if([client sendData:&packet onSocket:client.sockFileDescriptor] == -1)
+        {
+            [self updateConnectionUI];
+            [self killTimers];
+        }
     }
 }
 
@@ -261,17 +304,6 @@
     }];
 }
 
-
--(void)turnWheel
-{
-    //NSLog(@"wheel direction: %f", self.direction/THRESHOLD);
-//    if (client.isConnected) {
-//        char message[10];
-//        sprintf(message, "%f", self.direction);
-//        [client sendData:message onSocket:client.sockFileDescriptor];
-//        
-//    }
-}
 
 
 -(void)updateAccelerometerData
@@ -330,11 +362,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)slider:(id)sender {
-}
-- (IBAction)throttle:(id)sender {
-}
 @end

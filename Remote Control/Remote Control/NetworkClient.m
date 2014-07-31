@@ -28,6 +28,8 @@
 }
 
 
+
+
 -(int)connectToHost
 {
     if (!self.isConnected) {
@@ -36,19 +38,18 @@
         NSLog(@"port is %s", port_num);
      
         self.sockFileDescriptor = net_open(host_addr, port_num, CLIENT);
-        
-        if (self.sockFileDescriptor != -1) {
-
-            char message[] = "iPhoneClient!";
-            [self sendData:message onSocket:self.sockFileDescriptor];
+        if (self.sockFileDescriptor != -1)
+        {
+            int set = 1;
+            setsockopt(self.sockFileDescriptor, SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int));
             
-            [self receiveDataFromSocket:self.sockFileDescriptor];
-            
+            [self receiveData:self.sockFileDescriptor];
             self.isConnected = YES;
 
             return 0;
         }
-        else{
+        else
+        {
             self.isConnected = NO;
             
             NSString *error = [NSString stringWithFormat:@"%s", strerror(errno)];
@@ -70,25 +71,25 @@
 
 -(int)sendData:(const void *)data onSocket:(int)sockfd
 {
-    
-    NSLog(@"sending data of size %lu", sizeof(Data_Packet));
-    
-    if (net_is_connected(self.sockFileDescriptor))
-    {
-        NSLog(@"client is connected");
-    }
-    else{
-        NSLog(@"client is not connected");
-    }
+        
+    //signal(SIGPIPE, SIG_IGN);
+
     
     int send_result = send(sockfd, data, sizeof(Data_Packet), 0);
     if(send_result == -1)
     {
-        fprintf(stderr, "%s\n", strerror(errno));
         
-        close(sockfd);
-        self.isConnected = NO;
-        exit(EXIT_FAILURE);
+        NSString *error = [NSString stringWithFormat:@"%s", strerror(errno)];
+        
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:error delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        
+        [alert show];
+        
+        
+        [self disconnect];
+        NSLog(@"socket has closed");
+        return -1;
     }
     
 
@@ -96,7 +97,7 @@
     return 0;
 }
 
--(int)receiveDataFromSocket:(int)sockfd
+-(int)receiveData:(int)sockfd
 {
     char buffer[512];
     
