@@ -5,14 +5,26 @@ public class Client
 {
 	public static void main(String[] args) throws Exception
 	{
+
+		
+
 		System.out.println("Initializing Client");
 
 		Socket clientSocket = new Socket("127.0.0.1", 5000);
 		DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
 
+		
+		Integer throttle = 27;
+		Integer direction = 93;
 
-		byte[] data = hexStringToByteArray("1b0f");
+
+		byte[] data = "data".getBytes();
+
+		data[0] = throttle.byteValue();
+		data[1] = direction.byteValue();
+
+		//byte[] data = hexStringToByteArray("1b0f");
 
 		out.write(data, 0, 2);
 
