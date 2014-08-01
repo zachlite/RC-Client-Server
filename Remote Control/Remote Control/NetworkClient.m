@@ -43,7 +43,7 @@
             int set = 1;
             setsockopt(self.sockFileDescriptor, SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int));
             
-            [self receiveData:self.sockFileDescriptor];
+            //[self receiveData:self.sockFileDescriptor];
             self.isConnected = YES;
 
             return 0;

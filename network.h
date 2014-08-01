@@ -30,8 +30,8 @@ typedef struct{
 
 typedef struct
 {
-   signed char throttle;
-   signed char direction;
+   unsigned char throttle;
+   unsigned char direction;
     
 }Data_Packet;
 

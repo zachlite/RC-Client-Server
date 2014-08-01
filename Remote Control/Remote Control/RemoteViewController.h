@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreMotion/CoreMotion.h>
 #import "NetworkClient.h"
 #import "SettingsViewController.h"
 
@@ -15,7 +14,7 @@
 
 
 
-@interface RemoteViewController : UIViewController <UIAccelerometerDelegate, SettingsViewControllerDelegate>
+@interface RemoteViewController : UIViewController <SettingsViewControllerDelegate>
 
 
 {
@@ -24,7 +23,6 @@
     
     Data_Packet packet;
     
-    NSTimer *accelUpdater;
     NSTimer *dataSender;
     NSTimer *directionUpdater;
     NSTimer *throttleUpdater;
@@ -35,14 +33,13 @@
     
 }
 
-@property (strong, nonatomic) CMMotionManager *accelManager;
-@property (strong, nonatomic) UIView *movingImage;
+
+@property (weak, nonatomic) IBOutlet UISlider *steering;
 
 @property (weak, nonatomic) IBOutlet UISlider *throttle;
 @property (weak, nonatomic) IBOutlet UILabel *direction_label;
 
 
-@property (weak, nonatomic) IBOutlet UIImageView *wheel;
 @property (weak, nonatomic) IBOutlet UIView *status_light;
 @property (weak, nonatomic) IBOutlet UIButton *NetworkAccessButton;
 @property (weak, nonatomic) IBOutlet UILabel *status_message;

@@ -9,10 +9,9 @@
 #import "RemoteViewController.h"
 #import "NetworkClient.h"
 #import "SettingsViewController.h"
-#define SENSITIVITY 75
-#define THRESHOLD 50
+#define SENSITIVITY 85
+#define THRESHOLD 90
 
-#define ACCEL_UPDATE_INTERVAL .05
 #define SEND_INTERVAL .01
 #define THROTTLE_UPDATE_INTERVAL .02
 #define DIRECTION_UPDATE_INTERVAL .02
@@ -23,27 +22,22 @@
 //@property (nonatomic) double old_throttle;
 
 
-@property (nonatomic) double delta_direction;
-@property (nonatomic) double old_direction;
+
 @property (nonatomic) double direction;
-@property (nonatomic) CGFloat screen_center_x;
+
 
 @end
 
 @implementation RemoteViewController
-@synthesize accelManager;
-@synthesize movingImage;
 
 
-@synthesize delta_direction;
-@synthesize old_direction;
+@synthesize steering;
 @synthesize direction;
-@synthesize screen_center_x;
+
 
 @synthesize throttle;
 @synthesize direction_label;
 
-@synthesize wheel;
 @synthesize status_light;
 @synthesize status_message;
 @synthesize NetworkAccessButton;
@@ -78,6 +72,13 @@
     //[self.throttle addTarget:self action:@selector(updateThrottle) forControlEvents:UIControlEventAllEvents];
 }
 
+-(void)initSteeringSlider
+{
+    [self.steering setContinuous:NO];
+    [self.steering addTarget:self action:@selector(resetSteering) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+}
+    
+
 
 - (void)viewDidLoad
 {
@@ -86,28 +87,15 @@
     
 
     [self initThrottleSlider];
-    
-    self.screen_center_x = self.view.center.y;
-    
-    self.movingImage = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    [self.movingImage setCenter:CGPointMake(self.screen_center_x, self.view.center.x)];
-    self.movingImage.backgroundColor = [UIColor redColor];
-    //[self.view addSubview:self.movingImage];
+    [self initSteeringSlider];
     
     
-    
-    self.accelManager = [[CMMotionManager alloc] init];
-    
-    
-    self.accelManager.accelerometerUpdateInterval = .01;
-    [self.accelManager startAccelerometerUpdates];
     
     
 }
 
 -(void)killTimers
 {
-    [accelUpdater invalidate];
     [dataSender invalidate];
     [directionUpdater invalidate];
     [throttleUpdater invalidate];
@@ -115,10 +103,7 @@
 
 -(void)initTimers
 {
-    if (![accelUpdater isValid])
-    {
-        accelUpdater = [NSTimer scheduledTimerWithTimeInterval:ACCEL_UPDATE_INTERVAL target:self selector:@selector(updateAccelerometerData) userInfo:nil repeats:YES];
-    }
+   
     if (![dataSender isValid])
     {
         dataSender = [NSTimer scheduledTimerWithTimeInterval:SEND_INTERVAL target:self selector:@selector(sendCarData) userInfo:nil repeats:YES];
@@ -283,20 +268,14 @@
 
 -(void)updateDirection
 {
-    packet.direction = (char)self.direction;
-    
-    if (abs(packet.direction) < 10)
-    {
-        packet.direction = 0;
-    }
-    
+    packet.direction = (char)self.steering.value;
     //NSLog(@"direction is %d", packet.direction);
 }
 
 -(void)resetThrottle
 {
     [UIView animateWithDuration:.2 animations:^{
-        [self.throttle setValue:0.0 animated:YES];
+        [self.throttle setValue:90.0 animated:YES];
     }completion:^(BOOL finished){
         if (finished) {
             [self updateThrottle];
@@ -304,58 +283,19 @@
     }];
 }
 
-
-
--(void)updateAccelerometerData
+-(void)resetSteering
 {
-    
-    self.delta_direction = accelManager.accelerometerData.acceleration.y - self.old_direction;
-    self.delta_direction *= SENSITIVITY;
-
-   
-             
-
-    self.direction += self.delta_direction;
-    
-    if (self.direction > THRESHOLD) {
-        self.direction = THRESHOLD;
-    }
-    else if (self.direction < (THRESHOLD * -1)){
-        self.direction = THRESHOLD * -1;
-    }
-    
-    
-    
-    //[self.movingImage setCenter:CGPointMake(self.screen_center_x + self.direction, self.movingImage.center.y)];// + self.delta_throttle)];
-    
-    CGAffineTransform transform = CGAffineTransformMakeRotation(self.direction * (M_2_PI / 45));
-    self.wheel.transform = transform;
-    
-//    self.direction_label.text = [self double_to_string:(self.direction)];
-    
-    
-    self.old_direction = accelManager.accelerometerData.acceleration.y;
-
+    NSLog(@"steering reset");
+    [UIView animateWithDuration:.2 animations:^{
+        [self.steering setValue:90.0 animated:YES];
+    }completion:^(BOOL finished){
+        if (finished) {
+            [self updateDirection];
+        }
+    }];
+ 
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint touchPoint = [touch locationInView:self.view];
-    
-    
-    if (CGRectContainsPoint(self.wheel.frame, touchPoint))
-    {
-        [self Calibrate];
-    }
-    
-}
-
-- (void)Calibrate{
-    
-    //[self.movingImage setCenter:CGPointMake(self.view.center.y, self.view.center.x)];
-    self.direction = 0;
-}
 
 
 

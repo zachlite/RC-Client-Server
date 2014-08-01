@@ -3,47 +3,52 @@ import java.net.*;
 
 public class Client
 {
+    
+    private Socket clientSocket;
+    private DataOutputStream out;
+    
+    public Client(String host, int port) throws Exception
+    {
+        
+        InitializeNetwork(host, port);
+
+    }
+    
+    
 	public static void main(String[] args) throws Exception
 	{
 
+        new Client("192.168.1.227", 5000);
 		
 
+	}
+    
+    public void transmit(Integer throttle, Integer direction) throws Exception
+    {
+        byte[] transmit_data = "data".getBytes();
+        
+		transmit_data[0] = throttle.byteValue();
+		transmit_data[1] = direction.byteValue();
+        
+        out.write(transmit_data, 0 , 2);
+        
+    }
+
+    
+    private void InitializeNetwork(String host, int port) throws Exception
+    {
+        
 		System.out.println("Initializing Client");
+        
+		this.clientSocket = new Socket(host, port);
+		this.out = new DataOutputStream(this.clientSocket.getOutputStream());
 
-		Socket clientSocket = new Socket("127.0.0.1", 5000);
-		DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+        
+    }
 
-
-		
-		Integer throttle = 27;
-		Integer direction = 93;
-
-
-		byte[] data = "data".getBytes();
-
-		data[0] = throttle.byteValue();
-		data[1] = direction.byteValue();
-
-		//byte[] data = hexStringToByteArray("1b0f");
-
-		out.write(data, 0, 2);
-
-		clientSocket.close();
-	}
-
-
-	public static byte[] hexStringToByteArray(String s) 
-	{
-		int len = s.length();
-		byte[] data = new byte[len / 2];
-
-		for (int i = 0; i < len; i += 2)
-		{
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-			                      + Character.digit(s.charAt(i+1), 16));
-		}
-
-		return data;
-	}
+	public void CloseConnection() throws Exception
+    {
+        this.clientSocket.close();
+    }
 
 }

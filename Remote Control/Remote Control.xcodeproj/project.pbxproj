@@ -26,7 +26,6 @@
 		924CB68B197B757000103769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB66D197B756F00103769 /* UIKit.framework */; };
 		924CB693197B757000103769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 924CB691197B757000103769 /* InfoPlist.strings */; };
 		924CB695197B757000103769 /* Remote_ControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 924CB694197B757000103769 /* Remote_ControlTests.m */; };
-		924CB69F197B79C500103769 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CB69E197B79C500103769 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				924CB69F197B79C500103769 /* CoreMotion.framework in Frameworks */,
 				924CB66C197B756F00103769 /* CoreGraphics.framework in Frameworks */,
 				924CB66E197B756F00103769 /* UIKit.framework in Frameworks */,
 				924CB66A197B756F00103769 /* Foundation.framework in Frameworks */,
