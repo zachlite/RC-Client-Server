@@ -263,6 +263,8 @@ boolean Reconnect() {
 
 void setup() {
   Serial.begin(9600);
+  
+  initializeCar();
 
   Serial << GetBuffer_P(IDX_WT_MSG_START_WEBCLIENT,bufTemp,TEMP_BUFFER_SIZE) << endl << GetBuffer_P(IDX_WT_MSG_RAM,bufTemp,TEMP_BUFFER_SIZE) << freeMemory() << endl
     << GetBuffer_P(IDX_WT_MSG_WIRE_RX,bufTemp,TEMP_BUFFER_SIZE) << ARDUINO_RX_PIN << endl << GetBuffer_P(IDX_WT_MSG_WIRE_TX,bufTemp,TEMP_BUFFER_SIZE) << ARDUINO_TX_PIN << endl;
@@ -367,15 +369,50 @@ int Do_GET_Example(  int iLoopCounter, float fValue ) {
   if (wifi.openConnection( MY_SERVER_GET ) ) 
   {
    
+      
+    
     
       wifi <<  (const char*) strRequest << endl; 
       
       // Show server response
       //unsigned long TimeOut = millis() + 500;
+      
+      unsigned char received_data;
+      
+       unsigned char received_throttle;
+       unsigned char received_direction;
   
+      char count = 0;
       while (  /*TimeOut > millis() &&*/ wifi.isConnectionOpen() ) {
         if (  wifi.available() > 0 ) {
-          Serial << (char) wifi.read();
+          
+          received_data = (unsigned char) wifi.read();
+          if(received_data != -1)
+          {
+              if(count == 0)
+              {
+                 received_throttle = received_data; 
+                 count = 1;
+              }
+              else
+              {
+                received_direction = received_data;
+                count = 0;
+              }  
+         
+         
+         
+            Serial.print("throttle: ");
+            Serial.println(received_throttle, DEC);
+            Serial.print("direction: ");
+            Serial.println(received_direction, DEC);
+            
+            setThrottle((int)received_throttle);
+            setDirection((int)received_direction);  
+          }   
+          
+
+       
         }
       }
     
@@ -390,5 +427,133 @@ int Do_GET_Example(  int iLoopCounter, float fValue ) {
   wifi.setDebugChannel( NULL );
   return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************************************/
+//      Filename:   meanmachine
+//      Developers: Bryan Curneen
+/********************************************/
+
+/************  INCLUDE SECTION  *************/
+#include "Servo.h"
+/********************************************/
+
+
+/************  DEFINE SECTION  **************/
+#define LEFT_LIMIT 20
+#define RIGHT_LIMIT 160
+
+#define FOWARD_LIMIT  100
+#define REVERSE_LIMIT 80
+/********************************************/
+
+
+/*********  IMPORTANT VARIABLES  ************/
+
+Servo motor;
+Servo steer;
+/********************************************/
+
+
+/************************* SETUP & LOOP ************************/
+
+ 
+
+
+
+/*****************************************************************/
+void initializeCar()
+{
+        Serial.println("intializing car");
+	initializeMotor();
+	initializeServo();
+}
+
+
+/************************* MOTOR CONTROL ************************/
+void armESC()
+{
+      Serial.println("arming ESC");
+      	setThrottle(0);
+	delay(2000);	// hopefully the right amount of time to arm the ESC...experiment with this delay
+	setThrottle(90);
+        delay(50);
+}
+
+void coast()
+{
+	//motor.write(90);
+}
+
+void initializeMotor()
+{
+      Serial.println("initialing motor");
+	motor.attach(9);	// attach motor pin to PWM pin 9
+	armESC(); 
+}
+
+void setThrottle(int throttle)
+{
+        int real_throttle = (throttle - 180) * -1;
+  
+	if(real_throttle >= REVERSE_LIMIT && real_throttle <= FOWARD_LIMIT){
+                
+		motor.write(real_throttle);
+	}else if(real_throttle < REVERSE_LIMIT){
+		motor.write(REVERSE_LIMIT);
+	}else if(real_throttle > FOWARD_LIMIT){
+		motor.write(FOWARD_LIMIT);
+	}
+}
+
+
+/************************* SERVO CONTROL ************************/
+void initializeServo()
+{
+       Serial.println("initializing servo");
+	steer.attach(10);	// attach steer pin to PWM pin 8
+	steer.write(90);	// write "center" value to steering servo
+}
+
+void setDirection(int dir)
+{
+	if(dir >= LEFT_LIMIT && dir <= RIGHT_LIMIT){
+		steer.write(dir);
+	}else if(dir < LEFT_LIMIT){
+		steer.write(LEFT_LIMIT);
+	}else if(dir > RIGHT_LIMIT){
+		steer.write(RIGHT_LIMIT);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

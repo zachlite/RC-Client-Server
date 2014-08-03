@@ -12,7 +12,7 @@
 #define SENSITIVITY 85
 #define THRESHOLD 90
 
-#define SEND_INTERVAL .01
+#define SEND_INTERVAL .1
 #define THROTTLE_UPDATE_INTERVAL .02
 #define DIRECTION_UPDATE_INTERVAL .02
 
@@ -164,7 +164,7 @@
     self.host_string = @"d";
     self.port_string = @"3";
     
-    strncpy(PORT, "5000", sizeof("5000"));
+    strncpy(PORT, "80", sizeof("80"));
     strncpy(HOST, "192.168.1.227", sizeof("192.168.1.227"));
 
     
