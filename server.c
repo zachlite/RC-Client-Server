@@ -13,15 +13,25 @@
 #include "index.h"
 #include <pthread.h>
 
-
+#include <time.h>
 
 int serve(const char *PORT);
 int serv_listen_for_client(int sockfd);
 void* serv_client_handler(void *arg);
 
 
+Data_Packet carInstructions;
 
+void delay(int milliseconds)
+{
+    long pause;
+    clock_t now,then;
 
+    pause = milliseconds*(CLOCKS_PER_SEC/1000);
+    now = then = clock();
+    while( (now-then) < pause )
+        now = clock();
+}
 
 
 
@@ -32,107 +42,139 @@ void* serv_client_handler(void *arg)
     unsigned long msgLength; long byte_sent;
     msgLength = strlen(welcomeMessage);
 
+    char client_data[512];
+    char buffer[1024];
 
     new_client *nc = arg;
     int clientfd = nc->new_client_fd;
     char *clientaddr = nc->client_addr;
 
 
+    
+        recv(clientfd, &buffer, sizeof(buffer) - 1, 0);          
+        net_print_received_data(buffer);
+            //if you receive a get request, the car is trying to connect
+        if (!strncmp(buffer, "GET", 3))
+        { 
+              if (!strncmp(buffer, get_index, sizeof(index))) 
+              {
+                    printf("GET INDEX REQUEST\n");
+                     //strncpy(client_data, index_data, sizeof(client_data));
+                  
+                    while(1)
+                    {
+
+
+                        byte_sent = send(clientfd, index_data, sizeof(index_data) - 1, 0);                
+                        if (byte_sent == -1)
+                        {
+                            fprintf(stderr, "send failed %s\n", strerror(errno));
+
+                        }
+                        delay(500);
+
+                    }
+
+              }
+    
+        }
+       
+
+   
+  
 
     
+    
+    
 
-    // printf("sending welcome to client\n");
-    // byte_sent = send(clientfd, welcomeMessage, sizeof(welcomeMessage), 0);                
-    // if (byte_sent == -1)
-    // {
-    //     fprintf(stderr, "send failed %s\n", strerror(errno));
-
-    // }
+    //printf("sending welcome to client\n");
+    
    
+    
+        
 
 
 
-    //by this point, the type of client has been established.
+    // //by this point, the type of client has been established.
 
-    //launch processing thread
-
-
-    //here we listen for client requests, and load them on to the queue to be processed
-
-    bool client_connected = true;
-    int packet_count = 0;
-
-    //int size = sizeof(char);
-
-    while (client_connected)
-    {
-        if(1)
-        //if (net_is_connected(clientfd))
-        {
-            // char packet;
-            Data_Packet packet;
-            int bytes_received;
+    // //launch processing thread
 
 
-            //printf("listening for client request....\n");
-            bytes_received = recv(clientfd, &packet, sizeof(packet), 0);
+    // //here we listen for client requests, and load them on to the queue to be processed
+
+    // bool client_connected = true;
+    // int packet_count = 0;
+
+    // //int size = sizeof(char);
+
+    // while (client_connected)
+    // {
+    //     if(1)
+    //     //if (net_is_connected(clientfd))
+    //     {
+    //         // char packet;
+    //         Data_Packet packet;
+    //         int bytes_received;
+
+
+    //         //printf("listening for client request....\n");
+    //         bytes_received = recv(clientfd, &packet, sizeof(packet), 0);
             
-            if (bytes_received == 0)
-            {
-                printf("client has disconnected!!!!\n");
-                client_connected = false;
-            }
+    //         if (bytes_received == 0)
+    //         {
+    //             printf("client has disconnected!!!!\n");
+    //             client_connected = false;
+    //         }
 
-            else if(bytes_received < sizeof(packet))
-            {
-                printf("recieved %d bytes\n", bytes_received);
-                printf("incomplete transfer!\n");
-            }
+    //         else if(bytes_received < sizeof(packet))
+    //         {
+    //             printf("recieved %d bytes\n", bytes_received);
+    //             printf("incomplete transfer!\n");
+    //         }
 
 
-            else
-            {
-                //printf("recieved %d bytes\n", bytes_received);
+    //         else
+    //         {
+    //             //printf("recieved %d bytes\n", bytes_received);
 
-                packet_count++;
+    //             packet_count++;
                 
-                printf("%d %d\n", packet.throttle, packet.direction);
+    //             printf("%d %d\n", packet.throttle, packet.direction);
 
 
 
-                //printf("packet # %d\n", packet_count);
-                //fprintf(stderr ,"---------------->throttle: %d ---------------->direction: %d\n", packet.throttle, packet.direction);
-                //printf("--------->%x\n", packet);
+    //             //printf("packet # %d\n", packet_count);
+    //             //fprintf(stderr ,"---------------->throttle: %d ---------------->direction: %d\n", packet.throttle, packet.direction);
+    //             //printf("--------->%x\n", packet);
 
 
-                //net_print_received_data(packet.throttle);
-                //net_print_received_data(packet.direction);
+    //             //net_print_received_data(packet.throttle);
+    //             //net_print_received_data(packet.direction);
                 
-                //respond
-                //strcat(client_request, ": request received by server");
-                //send(clientfd, client_request, sizeof(client_request), 0);
+    //             //respond
+    //             //strcat(client_request, ": request received by server");
+    //             //send(clientfd, client_request, sizeof(client_request), 0);
 
-                //issue command to car
-            }
+    //             //issue command to car
+    //         }
 
 
           
 
-        }
-        else
-        {
-            printf("client is not there\n");
-            client_connected = false;
-        }
+    //     }
+    //     else
+    //     {
+    //         printf("client is not there\n");
+    //         client_connected = false;
+    //     }
 
-    }
+    // }
 
-    printf("received %d packets\n", packet_count);
+    // printf("received %d packets\n", packet_count);
 
     // while (client_connected) //while client server connection is present
     // {
 
-        
 
 
 
@@ -319,7 +361,7 @@ int main(int argc, const char * argv[])
 
     if (argv[1] == NULL)
     {
-        argv[1] = "5000";
+        argv[1] = "80";
     }
 
     serve(argv[1]);
