@@ -21,6 +21,16 @@
 #include <stdbool.h>
 
 
+//should include functions to handle:
+
+/*
+	setting socket characteristics
+	setting timeouts
+	building on different platforms
+
+
+*/
+
 typedef enum {SERVER, CLIENT} HostType_t;
 
 typedef struct{
